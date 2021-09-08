@@ -1,0 +1,32 @@
+{% extends 'search/base.html' %}
+
+{% block content %}
+
+<!-- Product-->
+<section class="page-section bg-dark" id="productSearched">
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center text-white mt-0">[Aliment cherché]</h2>
+    </div>
+</section>
+
+<!--Infos-->
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-12 col-md-6 border mb-3 mb-md-0 bg-primary">
+            <h2 class="text-center">[Nutriscore]</h2>
+        </div>
+
+        <div class="col-12 col-md-6 border mb-3 mb-md-0 bg-secondary">
+            <h2 class="text-center">[Repère nutritionnel]</h2>
+        </div>
+    </div>
+</div>
+
+<!--Fiche Produit-->
+<div class="container my-5">
+    <div class="row align-items-center">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Voir la fiche produit sur OpenFoodFacts</button>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'search/base.html' %}
+
+{% block content %}
+
+<!-- userName-->
+<section class="page-section bg-dark" id="productSearched">
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center text-white mt-0">[userName]</h2>
+        <h2 class="text-center text-white mt-0">[mail]</h2>
+    </div>
+</section>
+
+<!--Mail-->
+<div class="container my-5">
+    <input type="text" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" id="productRequest">
+    <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" id="productRequest">
+</div>
+
+<div class="container my-5">
+    <div class="text-center">
+        <button type="button" class="btn btn-primary col-md-4">Créer un compte</button>
+    </div>
+</div>
+<div class="container my-5 align-items-center">
+    <div class="text-center">
+        <button type="button" class="btn btn-primary col-md-4">Me connecter</button>
+    </div>
+</div>
+
+
+{% endblock %}

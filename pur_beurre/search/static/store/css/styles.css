@@ -4031,6 +4031,7 @@ textarea.form-control-lg {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  background-color: #923b23;
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -11316,7 +11317,7 @@ hr.divider-light {
 
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: #DE9440;
   transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
