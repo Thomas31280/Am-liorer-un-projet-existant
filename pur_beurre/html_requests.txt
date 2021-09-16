@@ -1,0 +1,5 @@
+https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=30&page=1&pnns_groups_1=Sugary%20snacks&json=true&fields=product_name,url,pnns_groups_1,categories,nutriscore_grade,stores
+https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=30&page=1&pnns_groups_1=Beverages&json=true&fields=product_name,url,pnns_groups_1,categories,nutriscore_grade,stores
+https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=30&page=1&pnns_groups_1=Cereals%20and%20potatoes&json=true&fields=product_name,url,pnns_groups_1,categories,nutriscore_grade,stores
+https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=30&page=1&pnns_groups_1=Salty%20snacks&json=true&fields=product_name,url,pnns_groups_1,categories,nutriscore_grade,stores
+https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=30&page=1&pnns_groups_1=Fat%20and%20sauces&json=true&fields=product_name,url,pnns_groups_1,categories,nutriscore_grade,stores
