@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from search.models import Aliment
-from search.models import Category
+from search.models import Aliment, Category
 
 def index(request):
     template = loader.get_template('search/index.html')
@@ -32,10 +31,13 @@ def info_aliment(request):
     cat_id = result[0]["pnns_groups_1_id"]
     category = list(Category.objects.filter(id=cat_id).values())[0]["category"]  # On récupère le nom de la catégorie dans la table category en utilisant la clé étrangère de la colonne pnns_group_1
     link_OFF = result[0]["url"]
+    product_name = result[0]["product_name"]
 
-    message = [nutriscore, " ", category, " ", link_OFF]
+    data_dict = {"nutri": nutriscore, "cat": category, "url": link_OFF, "name": product_name}
+    template = loader.get_template('search/aliment.html')
+    print(data_dict)
 
-    return HttpResponse(message)                                                 # ... Et on s'en sert dans les templates !
+    return render(request, 'search/aliment.html', data_dict)                          # ... Et on s'en sert dans les templates !
 
 def search_substitute(request):
 
@@ -59,6 +61,6 @@ def search_substitute(request):
             if product["nutriscore"] == "a":
                 final_sort.append(product)
 
-    message = final_sort
+    data = final_sort
 
-    return HttpResponse(message)                                                 # ... Et on s'en sert dans les templates !
+    return HttpResponse(data)                                                 # ... Et on s'en sert dans les templates !

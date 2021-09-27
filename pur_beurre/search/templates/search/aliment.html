@@ -5,7 +5,7 @@
 <!-- Product-->
 <section class="page-section bg-dark" id="productSearched">
     <div class="container px-4 px-lg-5">
-        <h2 class="text-center text-white mt-0">[Aliment cherché]</h2>
+        <h2 class="text-center text-white mt-0">Produit recherché : {{ data_dict.name }}</h2>
     </div>
 </section>
 
@@ -13,11 +13,11 @@
 <div class="container my-5">
     <div class="row align-items-center">
         <div class="col-12 col-md-6 border mb-3 mb-md-0 bg-primary">
-            <h2 class="text-center">[Nutriscore]</h2>
+            <h2 class="text-center">Nutriscore : {{ data_dict.nutri }}</h2>
         </div>
 
         <div class="col-12 col-md-6 border mb-3 mb-md-0 bg-secondary">
-            <h2 class="text-center">[Catégorie]</h2>
+            <h2 class="text-center">Catégorie : {{ data_dict.cat }}</h2>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
 <!--Fiche Produit-->
 <div class="container my-5">
     <div class="row align-items-center">
-        <button type="button" class="btn btn-primary btn-lg btn-block">Voir la fiche produit sur OpenFoodFacts</button>
+        <a href="{{data_dict.url}}"><button type="button" class="btn btn-primary btn-lg btn-block">Voir la fiche produit sur OpenFoodFacts</button></a>
     </div>
 </div>
 
