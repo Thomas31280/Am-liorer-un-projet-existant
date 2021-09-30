@@ -13,12 +13,11 @@
                 <p class="text-white-75 mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</p>
             
                 <!--User Question-->
-                <form class="form-inline mx-auto">
+                <form class="form-inline mx-auto" onsubmit="return process();">     <!--L'évènement submit appel la fonction JS process-->
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Quel produit souhaitez-vous substituer ?" aria-label="Recipient's username" aria-describedby="basic-addon2" id="productRequest">
+                        <input type="text" class="form-control" placeholder="Quel produit souhaitez-vous substituer ?" aria-label="Recipient's username" aria-describedby="basic-addon2" id="productRequestIndex">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary btn-warning" type="button" id="button">Chercher</button>
                         </div>
                     </div>
 

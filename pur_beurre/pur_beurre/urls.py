@@ -21,10 +21,9 @@ from search import views
 
 urlpatterns = [
     url(r'^$', views.index),                               # "/" will call the method "index" in "search.views.py"
-    url(r'^result/', views.result),
+    url(r'^result/$', views.search_substitute),
     url(r'^compte/', views.compte),
     url(r'^aliment/$', views.info_aliment),
-    url(r'^test/$', views.search_substitute),
     url(r'^search/', include('search.urls')),
     url(r'^admin/', admin.site.urls),
 ]

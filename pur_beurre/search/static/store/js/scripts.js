@@ -57,3 +57,11 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+
+////////// EVENT LISTENER INPUT FIELDS SEARCH SUBSTITUTE //////////
+
+const header_search_input_field = document.getElementById('productRequestHeader');    // On récupère l'élément sur lequel on veut détecter le clic
+header_search_input_field.addEventListener('onclick', function() {          // On écoute l'événement click
+    displayDate;               // On change le contenu de notre élément pour afficher "C'est cliqué !"
+});

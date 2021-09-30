@@ -17,8 +17,30 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../static/store/css/styles.css" rel="stylesheet" />
-
+        
     </head>
+
+    <script>
+        ////////// On définit un event listener sur les inputfields qui servent à la recherche de produits //////////
+        function process()
+        {
+            // Si l'event se fait au niveau de l'inputfield du header, on définit la valeur de la variable url
+            if ( document.getElementById("productRequestHeader").value ) {
+            var url = "/result/?query=" + document.getElementById("productRequestHeader").value;
+            }
+            
+            // Même démarche s'il se déclare au niveau de l'inputfield d'index.html
+            if ( document.getElementById("productRequestIndex").value ) {
+            var url = "/result/?query=" + document.getElementById("productRequestIndex").value;
+            }
+        
+        // Et on définit la valeur de l'url d'après celle de la variable url avec la méthode location.href
+        location.href = url;
+        return false;
+        }
+
+    </script>
+
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg fixed-top py-3 bg-warning" id="mainNav">
@@ -27,9 +49,9 @@
                 <a class="navbar-brand p-2" href="#page-top">Pur Beurre</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img src="../static/store/assets/img/portfolio/thumbnails/menu.png" height="30" width="30" alt="..."></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    
+
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><input type="text" class="form-control" placeholder="Chercher Produit" aria-label="Recipient's username" aria-describedby="basic-addon2" id="productRequest"></li>
+                        <li class="nav-item"><form onsubmit="return process();"><input type="text" class="form-control" placeholder="Chercher Produit" aria-label="Recipient's username" aria-describedby="basic-addon2" id="productRequestHeader"></form></li>
                         <li class="nav-item"><a class="nav-link" href="#about"><img src="../static/store/assets/img/portfolio/thumbnails/profile.png" height="30" width="30" alt="..."></a></li>
                         <li class="nav-item"><a class="nav-link" href="#services"><img src="../static/store/assets/img/portfolio/thumbnails/carotte.png" height="30" width="30" alt="..."></a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio"><img src="../static/store/assets/img/portfolio/thumbnails/sign_out.png" height="30" width="30" alt="..."></a></li>

@@ -18,9 +18,9 @@ class Aliment(models.Model):
 
 
 class Favorites(models.Model):
-    
+
     class Meta:
         unique_together = (('user_id', 'product_id'),)                    # On pose une contrainte d'unicité composite sur les deux champs spécifiés
-        
+
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Aliment, on_delete=models.CASCADE)
