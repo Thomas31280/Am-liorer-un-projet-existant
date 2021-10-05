@@ -17,29 +17,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../static/store/css/styles.css" rel="stylesheet" />
-        
+        <script src="../../static/store/js/myscripts.js"></script>
+
     </head>
-
-    <script>
-        ////////// On définit un event listener sur les inputfields qui servent à la recherche de produits //////////
-        function process()
-        {
-            // Si l'event se fait au niveau de l'inputfield du header, on définit la valeur de la variable url
-            if ( document.getElementById("productRequestHeader").value ) {
-            var url = "/result/?query=" + document.getElementById("productRequestHeader").value;
-            }
-            
-            // Même démarche s'il se déclare au niveau de l'inputfield d'index.html
-            if ( document.getElementById("productRequestIndex").value ) {
-            var url = "/result/?query=" + document.getElementById("productRequestIndex").value;
-            }
-        
-        // Et on définit la valeur de l'url d'après celle de la variable url avec la méthode location.href
-        location.href = url;
-        return false;
-        }
-
-    </script>
 
     <body id="page-top">
         <!-- Navigation-->

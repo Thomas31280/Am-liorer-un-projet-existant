@@ -26,7 +26,8 @@ class Command(BaseCommand):                                                     
                             category = product["pnns_groups_1"]
                             name = product["product_name"]
                             nutriscore = product["nutriscore_grade"]
-
+                            img_url = product["image_front_small_url"]
+                            print(url, category, name, nutriscore, img_url)
                             try:
                                 new_row_category = Category(category=category)       # On commence par insérer la categorie du produit dans la table category, qui a une contrainte d'unicité sur son champ category, puis on sauvegarde
                                 new_row_category.save()
@@ -35,14 +36,13 @@ class Command(BaseCommand):                                                     
 
                             product_category = Category.objects.get(category=category)   # On va chercher l'objet qui correspond à la catégorie dans la table category, afin de pouvoir le lier à l'instance de la table aliment
 
-
                             try:
-                                new_row_aliment = Aliment(pnns_groups_1=product_category, product_name=name, nutriscore=nutriscore, url=url) # On insère les données dans la table Aliment, puis on sauvegarde les modifications après chaque insertion
+                                new_row_aliment = Aliment(pnns_groups_1=product_category, product_name=name, nutriscore=nutriscore, url=url, img_url=img_url) # On insère les données dans la table Aliment, puis on sauvegarde les modifications après chaque insertion
                                 new_row_aliment.save()
                             except:
                                 print("A problem occured !!")
 
                         except:
-                            pass
+                            print("All block skiped !!")
 
                 print("Database successfully initialized")
