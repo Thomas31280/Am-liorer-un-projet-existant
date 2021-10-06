@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'search.apps.SearchConfig',     # On déclare notre application Search à Django.
+    'search.apps.SearchConfig',     # On déclare notre application search à Django.
+    'user.apps.UserConfig',         # On déclare notre application user à Django.
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -27,7 +27,7 @@ class Command(BaseCommand):                                                     
                             name = product["product_name"]
                             nutriscore = product["nutriscore_grade"]
                             img_url = product["image_front_small_url"]
-                            print(url, category, name, nutriscore, img_url)
+
                             try:
                                 new_row_category = Category(category=category)       # On commence par insérer la categorie du produit dans la table category, qui a une contrainte d'unicité sur son champ category, puis on sauvegarde
                                 new_row_category.save()

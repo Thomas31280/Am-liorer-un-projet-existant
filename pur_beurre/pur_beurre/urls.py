@@ -17,13 +17,8 @@ from django.contrib import admin
 from django.conf.urls import include, url
 from django.urls import path
 
-from search import views
-
 urlpatterns = [
-    url(r'^$', views.index),                               # "/" will call the method "index" in "search.views.py"
-    url(r'^result/$', views.search_substitute),
-    url(r'^compte/', views.compte),
-    url(r'^aliment/$', views.info_aliment),
-    url(r'^search/', include('search.urls')),
+    url(r'^', include('search.urls')),
+    url(r'^', include('user.urls')),
     url(r'^admin/', admin.site.urls),
 ]
