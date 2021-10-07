@@ -5,4 +5,5 @@ from . import views                                        # import views so we 
 urlpatterns = [
     url(r'^compte/', views.account_page),
     url(r'^connect/$', views.create_account),
+    url(r'^myfavorites/', views.consult_favorites),
 ]

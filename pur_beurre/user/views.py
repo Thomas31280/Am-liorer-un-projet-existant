@@ -42,4 +42,5 @@ def add_product_to_favorites(request):
     pass
 
 def consult_favorites(request):
-    pass
+    template = loader.get_template('user/favorites.html')
+    return HttpResponse(template.render(request=request))
