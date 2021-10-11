@@ -15,3 +15,26 @@ function process()
 location.href = url;
 return false;
 }
+
+function add_to_favorites()
+{
+    // On récupère l'url de la page courante
+    var urlcourante = window.location.href;
+    
+    // On va mettre en place un process qui va parser l'URL courante et ne conserver que le paramètre ( url du produit )
+    var part_to_remove = 0
+    for (var i = 0; i < urlcourante.length; i++ ) {
+        if (urlcourante.charAt(i) != '=') {
+            part_to_remove += 1
+        }
+        else {
+            break
+        }
+    }
+
+    var url = "/add_product/?url=" + urlcourante.substr(part_to_remove + 1);
+    
+    // Et on définit une nouvelle valeur de l'url d'après celle de la variable url avec la méthode location.href
+    location.href = url;
+    return false;
+}

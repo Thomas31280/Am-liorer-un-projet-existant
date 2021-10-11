@@ -30,5 +30,3 @@ class Favorites(models.Model):
     class Meta:
         unique_together = (('user_id', 'product_id'),)                    # On pose une contrainte d'unicité composite sur les deux champs spécifiés
 
-    def __str__(self):
-        return self.product_id
