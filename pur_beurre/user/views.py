@@ -57,11 +57,11 @@ def disconnect_account(request):
     try:
         logout(request)
         print("Vous avez été déconnecté avec succès !")
-        return search_views.index(request)                                       # On retourne à la page d'accueil
 
     except:
         print("Un problème est survenu et vous n'avez pas pu vous déconnecter !")
-        return search_views.index(request)
+    
+    return search_views.index(request)                                           # On retourne à la page d'accueil
 
 def add_product_to_favorites(request):
     

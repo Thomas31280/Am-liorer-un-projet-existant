@@ -33,8 +33,42 @@ function add_to_favorites()
     }
 
     var url = "/add_product/?url=" + urlcourante.substr(part_to_remove + 1);
-    
+
     // Et on définit une nouvelle valeur de l'url d'après celle de la variable url avec la méthode location.href
     location.href = url;
     return false;
+}
+
+function create_account()
+{
+    // Si les inputFields ayant pour id mail et userName ne sont pas Null, on construit une URL
+    if ( document.getElementById("mail").value && document.getElementById("userName").value) {
+    var url = "/create/?username=" + document.getElementById("userName").value + "&email=" + document.getElementById("mail").value;
+
+    // Et on définit la valeur de l'url d'après celle de la variable url avec la méthode location.href
+    location.href = url;
+    return false;
+    }
+
+    // Sinon, on envoie simplement une alerte à l'utilisateur
+    else {
+    alert("Vous n'avez pas correctement rempli les champs User Name et eMail");
+    }
+
+}
+
+function connect_account()
+{
+    // On va suivre essentiellement la même démarche que pour la fonction create_acount, avec un schéma d'url différent
+    if ( document.getElementById("mail").value && document.getElementById("userName").value) {
+    var url = "/connect/?username=" + document.getElementById("userName").value + "&email=" + document.getElementById("mail").value;
+
+    location.href = url;
+    return false;
+    }
+
+    else {
+    alert("Vous n'avez pas correctement rempli les champs User Name et eMail");
+    }
+
 }
