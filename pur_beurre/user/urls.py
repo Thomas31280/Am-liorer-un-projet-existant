@@ -3,11 +3,10 @@ from django.conf.urls import url
 from . import views                                        # import views so we can use them in urls.
 
 urlpatterns = [
-    url(r'^compte/', views.account_page),
-    url(r'^create/$', views.create_account),
-    url(r'^myfavorites/', views.consult_favorites),
-    url(r'^connect/$', views.connect_account),
-    url(r'^disconnect/', views.disconnect_account),
-    url(r'^add_product/$', views.add_product_to_favorites),
-    url(r'^my_favorites/', views.consult_favorites),
+    url(r'^compte/', views.account_page, name="compte"),
+    url(r'^create/$', views.create_account, name="create"),
+    url(r'^connect/$', views.connect_account, name="connect"),
+    url(r'^disconnect/', views.disconnect_account, name="disconnect"),
+    url(r'^add_product/$', views.add_product_to_favorites, name="add_product"),
+    url(r'^my_favorites/', views.consult_favorites, name="my_favorites"),
 ]

@@ -24,7 +24,6 @@ def info_aliment(request):
 
     data_dict = {"nutri": nutriscore, "cat": category, "url": link_OFF, "name": product_name}
     template = loader.get_template('search/aliment.html')
-    print(data_dict)
 
     return render(request, 'search/aliment.html', locals())                      # ... Et on s'en sert dans les templates !
 
@@ -33,39 +32,51 @@ def search_substitute(request):
     obj = str(request.GET)
     query = request.GET.get('query')
 
-    prod_to_replace = list(Aliment.objects.filter(product_name=query).values())  # Comme dans la vue info_aliment, on a ciblé un produit avec des des filtres dans la base de données
-    product_name = query                                                         # On va se servir de cette variable dans le template
-    category = prod_to_replace[0]["pnns_groups_1_id"]
-    nutriscore = prod_to_replace[0]["nutriscore"]
-    substitutes = Aliment.objects.filter(pnns_groups_1=category)                 # On réduit la liste des substitus possibles aux produits de la même catégorie que celui que l'utilisateur cherche à remplacer
+    if query:
 
-    final_sort = []                                                              # On initialise une liste vide qui va contenir les produits qui sont substituables. On va remplir cette liste dans la boucle qui vient juste en dessous
+        try:
+        
+            prod_to_replace = list(Aliment.objects.filter(product_name=query).values())  # Comme dans la vue info_aliment, on a ciblé un produit avec des des filtres dans la base de données
+            product_name = query                                                         # On va se servir de cette variable dans le template
+            category = prod_to_replace[0]["pnns_groups_1_id"]
+            nutriscore = prod_to_replace[0]["nutriscore"]
+            substitutes = Aliment.objects.filter(pnns_groups_1=category)                 # On réduit la liste des substitus possibles aux produits de la même catégorie que celui que l'utilisateur cherche à remplacer
 
-    for product in substitutes:
-        if nutriscore != "a":
-            if product.nutriscore < nutriscore:
-                final_sort.append(product)
+            final_sort = []                                                              # On initialise une liste vide qui va contenir les produits qui sont substituables. On va remplir cette liste dans la boucle qui vient juste en dessous
 
-        else:
-            if product.nutriscore == "a":
-                final_sort.append(product)
+            for product in substitutes:
+                if nutriscore != "a":
+                    if product.nutriscore < nutriscore:
+                        final_sort.append(product)
 
-    data = final_sort
+                else:
+                    if product.nutriscore == "a":
+                        final_sort.append(product)
 
-    # On découpe la liste des aliments sur plusieurs pages ( liste, nombre d'éléments pas page)
-    paginator = Paginator(data, 6)
-    # On récupère le numéro de la page actuelle
-    page = request.GET.get('page')
-    # On retourne uniquement les éléments qui concernent cette page
-    try:
-        aliments = paginator.get_page(page)
-    except PageNotAnInteger:
-        # Si le paramètre page n'est pas un int, on affiche la première page
-        aliments = paginator.get_page(1)
-    except EmptyPage:
-        # Si la page est out of range, on affiche la dernière page de résultats
-        aliments = paginator.get_page(paginator.num_pages)
+            data = final_sort
 
-    data_dict = { 'aliments': aliments, 'paginate': True }                       # On a ajouté une clé paginate dont la valeur est un booléen afin de se servir de ce booléen pour mettre l'affichage des boutons previous et next dans une structure conditionnelle au niveau du template
+            # On découpe la liste des aliments sur plusieurs pages ( liste, nombre d'éléments pas page)
+            paginator = Paginator(data, 6)
+            # On récupère le numéro de la page actuelle
+            page = request.GET.get('page')
+            # On retourne uniquement les éléments qui concernent cette page
+            try:
+                aliments = paginator.get_page(page)
+            except PageNotAnInteger:
+                # Si le paramètre page n'est pas un int, on affiche la première page
+                aliments = paginator.get_page(1)
+            except EmptyPage:
+                # Si la page est out of range, on affiche la dernière page de résultats
+                aliments = paginator.get_page(paginator.num_pages)
 
-    return render(request, 'search/result.html', locals())                       # ... Et on s'en sert dans les templates !
+            data_dict = { 'aliments': aliments, 'paginate': True }                       # On a ajouté une clé paginate dont la valeur est un booléen afin de se servir de ce booléen pour mettre l'affichage des boutons previous et next dans une structure conditionnelle au niveau du template
+
+            return render(request, 'search/result.html', locals())                       # ... Et on s'en sert dans les templates !
+
+        except:
+            print("Le produit recherché ne se trouve pas en base de données")
+            return render(request, '500.html', status=500)
+
+    else:
+        print("Vous avez envoyé un champ de recherche vide")
+        return render(request, '500.html', status=500)
