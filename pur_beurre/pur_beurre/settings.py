@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--*^pq=7(&f0salsf%6t!xy27d@r@@!7=n8rl$tx5#ghco%w%sm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if os.environ.get('ENV') == 'PRODUCTION':
+    DEBUG = False                            # Si la variable d'environnement ENV est égale à production, alors cela signifie qu'il faut désactiver le mode debug car nous ne sommes plus dans un environnement de développement
+else:
+    DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["Pur_Beurre_P8_TD.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
@@ -49,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',                # On indique que l'on souhaite utiliser le module WhiteNoise
 ]
 
 ROOT_URLCONF = 'pur_beurre.urls'
@@ -129,3 +135,12 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if os.environ.get('ENV') == 'PRODUCTION':                           # Si le projet tourne sur un serveur de prod
+    
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))       # On définit la variable PROJECT_ROOT à la racine du projet actuel
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')         # Et alors le dossier static devra être staticfiles. Ce dossier sera généré automatiquement par django
+    STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'), )     # Enfin, on définit la constante STATICFILES_DIRS qui va contenir le dossier static qu'on a préalablement créé à la racine du projet, au niveau du projet et non des applications donc...
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # On indique enfin dans les réglages de prod que nos fivhiers doivent être servis par WhiteNoise
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)                        # 

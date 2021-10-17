@@ -78,7 +78,7 @@ class UserTestCase(TestCase):
         
         response = c.get('/add_product/', {'url': url})
         self.assertEqual(response.status_code, 200)
-                
+
         # test that add_product_to_favorites returns a 500 if the user is connected and the product already is in his favorites
     def test_add_two_times_product_to_favorites(self):
         c = Client()
