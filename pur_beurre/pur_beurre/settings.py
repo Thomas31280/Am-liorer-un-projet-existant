@@ -143,4 +143,4 @@ if os.environ.get('ENV') == 'PRODUCTION':                           # Si le proj
     STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'), )     # Enfin, on définit la constante STATICFILES_DIRS qui va contenir le dossier static qu'on a préalablement créé à la racine du projet, au niveau du projet et non des applications donc...
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # On indique enfin dans les réglages de prod que nos fivhiers doivent être servis par WhiteNoise
     db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)                        # 
+    DATABASES['default'].update(db_from_env)
