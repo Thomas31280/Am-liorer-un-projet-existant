@@ -137,14 +137,5 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if os.environ.get('ENV') == 'PRODUCTION':                           # Si le projet tourne sur un serveur de prod
-    
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))       # On définit la variable PROJECT_ROOT à la racine du projet actuel
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')         # Et alors le dossier static devra être staticfiles. Ce dossier sera généré automatiquement par django
-    STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'), )     # Enfin, on définit la constante STATICFILES_DIRS qui va contenir le dossier static qu'on a préalablement créé à la racine du projet, au niveau du projet et non des applications donc...
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # On indique enfin dans les réglages de prod que nos fivhiers doivent être servis par WhiteNoise
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
 # Activate Django-Heroku.
 django_heroku.settings(locals())
