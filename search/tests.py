@@ -1,8 +1,14 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, LiveServerTestCase
 from django.urls import reverse
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
 
-from search.models import Aliment, Category
+from search.models import Aliment, Category, Favorites
 
+############################
+#########Unit Tests#########
+############################
 class SearchTestCase(TestCase):
 
     # Index
@@ -43,3 +49,42 @@ class SearchTestCase(TestCase):
         product_name = "produit_non_répertorié_en_base"
         response = c.get('/result/', {'query': product_name})
         self.assertEqual(response.status_code, 500)
+
+
+################################
+#########Selenium Tests#########
+################################
+class UserTest(LiveServerTestCase):
+    
+    # Test the following pattern : User consult the main page, logout, click on the icon of connexion page, enter his
+    # personnal informations in the inputfields, click on "se connecter" and click again on the icon of connexion page
+    def test_consult_favorites(self):
+
+        selenium = webdriver.Chrome(ChromeDriverManager().install())
+
+        selenium.get('http://127.0.0.1:8000/')                       # Choose the url to visit
+
+        # Find the elements we need in the page
+        logout = selenium.find_element_by_id('logout')
+
+        # Click on logout
+        logout.click()
+
+        selenium.get('http://127.0.0.1:8000/compte/')
+
+        submit = selenium.find_element_by_id('connexion')
+        inputfield_mail = selenium.find_element_by_id('mail')
+        inputfield_username = selenium.find_element_by_id('userName')
+
+
+        # Populate the form with data
+        inputfield_mail.send_keys('johndoe@hotmail.fr')
+        inputfield_username.send_keys('Bruce_Wayne')
+
+        # Submit form
+        submit.send_keys(Keys.RETURN)
+
+        selenium.get('http://127.0.0.1:8000/compte/')
+
+        # Check result; page source looks at entire html document
+        assert 'Bruce_Wayne' in selenium.page_source

@@ -5,7 +5,11 @@
 <!-- userName-->
 <section class="page-section bg-dark" id="productSearched">
     <div class="container px-4 px-lg-5">
-        <h2 class="text-center text-white mt-0">[userName]</h2>
+        <h2 class="text-center text-white mt-0">{% if data_dict.username %}
+            {{ data_dict.username }}
+        {% else %}
+            {{ "Vous n'êtes pas connecté" }}
+        {% endif %}</h2>
     </div>
 </section>
 
@@ -22,7 +26,7 @@
 </div>
 <div class="container my-5 align-items-center">
     <div class="text-center">
-        <button type="button" class="btn btn-primary col-md-4" onclick="return connect_account()">Me connecter</button>
+        <button type="button" class="btn btn-primary col-md-4" onclick="return connect_account()" id="connexion">Me connecter</button>
     </div>
 </div>
 
