@@ -13,9 +13,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +31,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["Pur_Beurre_P8_TD.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["purbeurrep8td.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',                # On indique que l'on souhaite utiliser le module WhiteNoise
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',                # On indique que l'on souhaite utiliser le module WhiteNoise
 ]
 
 ROOT_URLCONF = 'pur_beurre.urls'
@@ -129,18 +130,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if os.environ.get('ENV') == 'PRODUCTION':                           # Si le projet tourne sur un serveur de prod
-    
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))       # On définit la variable PROJECT_ROOT à la racine du projet actuel
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')         # Et alors le dossier static devra être staticfiles. Ce dossier sera généré automatiquement par django
-    STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'), )     # Enfin, on définit la constante STATICFILES_DIRS qui va contenir le dossier static qu'on a préalablement créé à la racine du projet, au niveau du projet et non des applications donc...
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   # On indique enfin dans les réglages de prod que nos fivhiers doivent être servis par WhiteNoise
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)                        # 
+# Activate Django-Heroku.
+django_heroku.settings(locals())
