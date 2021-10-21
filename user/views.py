@@ -10,8 +10,12 @@ from django.contrib.auth.models import User
 
 
 def account_page(request):
-    template = loader.get_template('user/compte.html')
-    return HttpResponse(template.render(request=request))
+
+    current_user = request.user
+    username = current_user.username
+    data_dict = { 'username': username }
+
+    return render(request, 'user/compte.html', locals())
 
 def create_account(request):
 
