@@ -5,14 +5,16 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from search.models import Aliment, Category
 
+
 def index(request):
     template = loader.get_template('search/index.html')
     return HttpResponse(template.render(request=request))
 
+
 def info_aliment(request):
 
     obj = str(request.GET)                                                       # On utilise la méthode GET sur l'objet request de classe WSGIRequest. Cette méthode de la classe WSGIRequest permet de récupérer un dictionnaire qui contient les arguments passés à l'URL
-    query = request.GET.get('query')                                             # On récupère la requête dans le dictionnaire ainsi créé. Ici, on attends de la requête qu'elle soit l'URL d'un produit contenu dans la table search_aliment de la DB pur_beurre            
+    query = request.GET.get('query')                                             # On récupère la requête dans le dictionnaire ainsi créé. Ici, on attends de la requête qu'elle soit l'URL d'un produit contenu dans la table search_aliment de la DB pur_beurre
 
     result = list(Aliment.objects.filter(url=query).values())                    # Ici, on va récupérer l'instance de la base de donnée dont l'URL correspond à celle passée en paramètre. Par défaut, c'est un objet Django QuerySet qui est retourné. On va donc demander à ce que les attributs de cet objet soient retournées ( methode .values() ), puis on demande ensuite à ce que l'objet QuerySet soit converti en liste ( list(QuerySet_obj) )
 
@@ -22,10 +24,12 @@ def info_aliment(request):
     link_OFF = result[0]["url"]
     product_name = result[0]["product_name"]
 
-    data_dict = {"nutri": nutriscore, "cat": category, "url": link_OFF, "name": product_name}
+    data_dict = {"nutri": nutriscore, "cat": category, "url": link_OFF,
+                 "name": product_name}
     template = loader.get_template('search/aliment.html')
 
     return render(request, 'search/aliment.html', locals())                      # ... Et on s'en sert dans les templates !
+
 
 def search_substitute(request):
 
@@ -35,7 +39,7 @@ def search_substitute(request):
     if query:
 
         try:
-        
+
             prod_to_replace = list(Aliment.objects.filter(product_name=query).values())  # Comme dans la vue info_aliment, on a ciblé un produit avec des des filtres dans la base de données
             product_name = query                                                         # On va se servir de cette variable dans le template
             category = prod_to_replace[0]["pnns_groups_1_id"]
@@ -69,11 +73,11 @@ def search_substitute(request):
                 # Si la page est out of range, on affiche la dernière page de résultats
                 aliments = paginator.get_page(paginator.num_pages)
 
-            data_dict = { 'aliments': aliments, 'paginate': True }                       # On a ajouté une clé paginate dont la valeur est un booléen afin de se servir de ce booléen pour mettre l'affichage des boutons previous et next dans une structure conditionnelle au niveau du template
+            data_dict = {'aliments': aliments, 'paginate': True}                         # On a ajouté une clé paginate dont la valeur est un booléen afin de se servir de ce booléen pour mettre l'affichage des boutons previous et next dans une structure conditionnelle au niveau du template
 
             return render(request, 'search/result.html', locals())                       # ... Et on s'en sert dans les templates !
 
-        except:
+        except IndexError:                                                               # Une erreur d'index signifie que prod_to_replace n'a pas la structure attendue, et donc que le produit n'existe pas en base de données
             print("Le produit recherché ne se trouve pas en base de données")
             return render(request, '500.html', status=500)
 
