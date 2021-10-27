@@ -13,14 +13,14 @@ def account_page(request):
 
     current_user = request.user
     username = current_user.username
-    data_dict = { 'username': username }
+    data_dict = {'username': username}
 
     return render(request, 'user/compte.html', locals())
 
+
 def create_account(request):
 
-    obj = str(request.GET)                                                       # On utilise la méthode GET sur l'objet request de classe WSGIRequest. Cette méthode de la classe WSGIRequest permet de récupérer un dictionnaire qui contient les arguments passés à l'URL
-    username = request.GET.get('username')                                       # On récupère la requête dans le dictionnaire ainsi créé. Ici, c'est la valeur de la clé username qu'on récupère
+    username = request.GET.get('username')                                       # On récupère la requête sous forme d'un dictionnaire. Ici, c'est la valeur de la clé username qu'on récupère
     email = request.GET.get('email')
 
     if email and username:
@@ -31,8 +31,9 @@ def create_account(request):
             template = loader.get_template('user/compte.html')
             return HttpResponse(template.render(request=request))
 
-        except:
-            print("User can't be saved in table, check the constraints on table's fields")
+        except Exception:
+            print("User can't be saved in table, check the constraints on \
+                   table's fields")
             return render(request, '500.html', status=500)
 
     else:
@@ -42,7 +43,6 @@ def create_account(request):
 
 def connect_account(request):
 
-    obj = str(request.GET)
     username = request.GET.get('username')
     email = request.GET.get('email')
 
@@ -56,20 +56,21 @@ def connect_account(request):
         print("Impossible de vous connecter")
         return render(request, '500.html', status=500)
 
+
 def disconnect_account(request):
 
     try:
         logout(request)
         print("Vous avez été déconnecté avec succès !")
 
-    except:
-        print("Un problème est survenu et vous n'avez pas pu vous déconnecter !")
+    except Exception:
+        print("Un problème est survenu, vous n'avez pas pu vous déconnecter")
 
     return search_views.index(request)                                           # On retourne à la page d'accueil
 
+
 def add_product_to_favorites(request):
 
-    obj = str(request.GET)
     product_url = request.GET.get('url')                                         # On récupère l'id du produit dans l'URL
 
     try:
@@ -85,12 +86,12 @@ def add_product_to_favorites(request):
             new_favorite.save()
             print("Aliment enregistré avec succès !")
             return search_views.index(request)
-        
-        except:
+
+        except Exception:
             print("L'aliment se trouve déjà dans vos favoris")
             return render(request, '500.html', status=500)
 
-    except:
+    except Exception:
         print("Vous n'êtes pas connecté !")
         return render(request, '500.html', status=500)
 
@@ -125,7 +126,7 @@ def consult_favorites(request):
             # Si la page est out of range, on affiche la dernière page de résultats
             my_favorites = paginator.get_page(paginator.num_pages)
 
-        data_dict = { 'favorites': my_favorites, 'paginate': True }                  # On a ajouté une clé paginate dont la valeur est un booléen afin de se servir de ce booléen pour mettre l'affichage des boutons previous et next dans une structure conditionnelle au niveau du template
+        data_dict = {'favorites': my_favorites, 'paginate': True}                    # On a ajouté une clé paginate dont la valeur est un booléen afin de se servir de ce booléen pour mettre l'affichage des boutons previous et next dans une structure conditionnelle au niveau du template
 
         return render(request, 'user/favorites.html', locals())                      # ... Et on s'en sert dans les templates !
 
