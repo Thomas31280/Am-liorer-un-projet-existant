@@ -1,7 +1,7 @@
 ### PRESENTATION ET OBJECTIFS DE L'APPLICATION
 
-Cette projet, ayant pour but d'être déployée sur serveur Heroku, a été développée avec le famework Django, sur une architecture de projet MVT donc. 
-Le projet se décompose en deux applications, : User qui gère toutes les vues, templates et modèles relatifs aux utilisateurs, et Search, qui regroupe
+Ce projet, ayant pour but d'être déployé sur serveur Heroku, a été développée avec le famework Django, sur une architecture de projet MVT donc. 
+Le projet se décompose en deux applications : User qui gère toutes les vues, templates et modèles relatifs aux utilisateurs, et Search, qui regroupe
 toutes les fonctionnalités relatives à la gestion des produits en base de données, la recherche de substitus etc... Le SGBDR retenu pour ce projet a
 été PostGreSQL, notamment pour sa facilité de déploiement sur serveur de production Heroku. Le serveur web utilisé est Gunicorn ( comme détaillé dans
 le procfile ), le serveur de développement celui intégré à Django. Les requêtes en base de données sont réalisées avec l'ORM de Django. La partie

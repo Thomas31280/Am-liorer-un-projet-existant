@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', # On utilise l'adaptateur postgresql
+        'ENGINE': 'django.db.backends.postgresql_psychopg2', # On utilise l'adaptateur postgresql
         'NAME': 'pur_beurre', # Le nom de notre DB
-        'USER': 'postgres', # Notre username sur PSQL
-        'PASSWORD': '',
-        'HOST': '',
+        'USER': 'thomas', # Notre username sur PSQL ( postgres )
+        'PASSWORD': 'edgard31280',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
