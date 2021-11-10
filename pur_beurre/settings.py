@@ -31,7 +31,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["purbeurrep8td.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["purbeurrep8td.herokuapp.com", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -86,9 +86,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', # On utilise l'adaptateur postgresql
         'NAME': 'pur_beurre', # Le nom de notre DB
-        'USER': 'postgres', # Notre username sur PSQL
-        'PASSWORD': '',
-        'HOST': '',
+        'USER': 'postgres', # Notre username sur PSQL ( postgres )
+        'PASSWORD': 'edgard31280',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
