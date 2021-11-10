@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'pur_beurre', # Le nom de notre DB
         'USER': 'postgres', # Notre username sur PSQL ( postgres )
         'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
