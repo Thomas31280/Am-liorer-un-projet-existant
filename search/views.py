@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+import logging
 
 from search.models import Aliment, Category
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 def index(request):
     template = loader.get_template('search/index.html')
@@ -35,7 +38,12 @@ def search_substitute(request):
 
     obj = str(request.GET)
     query = request.GET.get('query')
-
+    
+    logger.info('New search', exc_info=True, extra={
+        # Optionally pass a request and we'll grab any information we can
+        'request': request,
+    })
+    
     if query:
 
         try:
