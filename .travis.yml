@@ -4,7 +4,10 @@ language: python
 python:
   - '3.8.5'
 
-branches:
+addons:
+  chrome: stable
+
+  branches:
   only:
     - main
 
