@@ -4,7 +4,7 @@ python:
 
 branches:
   only:
-    - master
+    - main
 
 before_script:
   - pip install -r requirements.txt
