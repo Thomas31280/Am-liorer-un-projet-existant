@@ -66,36 +66,36 @@ class SearchTestCase(TestCase):
 #########Selenium Tests#########
 ################################
 
-class UserTest(LiveServerTestCase):
+# class UserTest(LiveServerTestCase):
 
-    # Test the following pattern : User consult the main page, logout, click on the icon of connexion page, enter his
-    # personnal informations in the inputfields, click on "se connecter" and click again on the icon of connexion page
-    def test_consult_favorites(self):
+#     # Test the following pattern : User consult the main page, logout, click on the icon of connexion page, enter his
+#     # personnal informations in the inputfields, click on "se connecter" and click again on the icon of connexion page
+#     def test_consult_favorites(self):
 
-        selenium = webdriver.Chrome(ChromeDriverManager().install())
+#         selenium = webdriver.Chrome(ChromeDriverManager().install())
 
-        selenium.get('http://127.0.0.1:8000/')                       # Choose the url to visit
+#         selenium.get('http://127.0.0.1:8000/')                       # Choose the url to visit
 
-        # Find the elements we need in the page
-        logout = selenium.find_element_by_id('logout')
+#         # Find the elements we need in the page
+#         logout = selenium.find_element_by_id('logout')
 
-        # Click on logout
-        logout.click()
+#         # Click on logout
+#         logout.click()
 
-        selenium.get('http://127.0.0.1:8000/compte/')
+#         selenium.get('http://127.0.0.1:8000/compte/')
 
-        submit = selenium.find_element_by_id('connexion')
-        inputfield_mail = selenium.find_element_by_id('mail')
-        inputfield_username = selenium.find_element_by_id('userName')
+#         submit = selenium.find_element_by_id('connexion')
+#         inputfield_mail = selenium.find_element_by_id('mail')
+#         inputfield_username = selenium.find_element_by_id('userName')
 
-        # Populate the form with data
-        inputfield_mail.send_keys('johndoe@hotmail.fr')
-        inputfield_username.send_keys('Bruce_Wayne')
+#         # Populate the form with data
+#         inputfield_mail.send_keys('johndoe@hotmail.fr')
+#         inputfield_username.send_keys('Bruce_Wayne')
 
-        # Submit form
-        submit.send_keys(Keys.RETURN)
+#         # Submit form
+#         submit.send_keys(Keys.RETURN)
 
-        selenium.get('http://127.0.0.1:8000/compte/')
+#         selenium.get('http://127.0.0.1:8000/compte/')
 
-        # Check result; page source looks at entire html document
-        assert 'Bruce_Wayne' in selenium.page_source
+#         # Check result; page source looks at entire html document
+#         assert 'Bruce_Wayne' in selenium.page_source
