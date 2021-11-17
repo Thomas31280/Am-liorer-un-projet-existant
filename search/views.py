@@ -10,6 +10,7 @@ from search.models import Aliment, Category
 logger = logging.getLogger(__name__)
 
 def index(request):
+    MAIS POURQUOI EST-IL SI MECHANT ?
     template = loader.get_template('search/index.html')
     return HttpResponse(template.render(request=request))
 
