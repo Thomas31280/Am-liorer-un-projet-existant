@@ -41,9 +41,9 @@ function add_to_favorites()
 
 function create_account()
 {
-    // Si les inputFields ayant pour id mail et userName ne sont pas Null, on construit une URL
-    if ( document.getElementById("mail").value && document.getElementById("userName").value) {
-    var url = "/create/?username=" + document.getElementById("userName").value + "&email=" + document.getElementById("mail").value;
+    // Si les inputFields ayant pour id mail, userName et password ne sont pas Null, on construit une URL
+    if ( document.getElementById("mail").value && document.getElementById("userName").value && document.getElementById("password").value) {
+    var url = "/create/?username=" + document.getElementById("userName").value + "&email=" + document.getElementById("mail").value + "&password=" + document.getElementById("password").value;
 
     // Et on définit la valeur de l'url d'après celle de la variable url avec la méthode location.href
     location.href = url;
@@ -52,7 +52,7 @@ function create_account()
 
     // Sinon, on envoie simplement une alerte à l'utilisateur
     else {
-    alert("Vous n'avez pas correctement rempli les champs User Name et eMail");
+    alert("Vous n'avez pas correctement rempli les champs User Name, eMail et Password");
     }
 
 }
@@ -61,7 +61,7 @@ function connect_account()
 {
     // On va suivre essentiellement la même démarche que pour la fonction create_acount, avec un schéma d'url différent
     if ( document.getElementById("mail").value && document.getElementById("userName").value) {
-    var url = "/connect/?username=" + document.getElementById("userName").value + "&email=" + document.getElementById("mail").value;
+    var url = "/connect/?username=" + document.getElementById("userName").value + "&email=" + document.getElementById("mail").value + "&password=" + document.getElementById("password").value;
 
     location.href = url;
     return false;
@@ -69,6 +69,36 @@ function connect_account()
 
     else {
     alert("Vous n'avez pas correctement rempli les champs User Name et eMail");
+    }
+
+}
+
+
+
+////////// AMELIORATIONS P11 //////////
+
+// Redirection vers la page de modification des données personnelles ( Le déclenchement de cette fonction se fait au niveau du HTML )
+function update_profile_interface()
+{
+
+    // On définit simplement la valeur de l'url qui correspond au schéma d'URL relié à la vue qui affiche l'interface de modifications des données personnelles
+    location.href = "/update_profile_interface";
+}
+
+function update_profile()
+{
+    // Si les inputFields ayant pour id newMail, newUserName et newPassword ne sont pas Null, on construit une URL
+    if ( document.getElementById("newMail").value && document.getElementById("newUserName").value && document.getElementById("newPassword").value) {
+    var url = "/update/?username=" + document.getElementById("newUserName").value + "&email=" + document.getElementById("newMail").value + "&password=" + document.getElementById("newPassword").value;
+
+    // Et on définit la valeur de l'url d'après celle de la variable url avec la méthode location.href
+    location.href = url;
+    return false;
+    }
+
+    // Sinon, on envoie simplement une alerte à l'utilisateur
+    else {
+    alert("Vous n'avez pas correctement rempli les champs User Name, Mail et Password");
     }
 
 }

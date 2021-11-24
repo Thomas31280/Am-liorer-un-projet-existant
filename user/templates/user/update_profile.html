@@ -1,0 +1,25 @@
+{% extends 'search/base.html' %}
+
+{% block content %}
+
+<!-- userName-->
+<section class="page-section bg-dark" id="productSearched">
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center text-white mt-0">Veuillez référencer les nouvelles données de votre profile</h2>
+    </div>
+</section>
+
+<!--Mail-->
+<div class="container my-5">
+    <input type="text" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" id="newMail">
+    <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" id="newUserName">
+    <input type="text" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2" id="newPassword">
+</div>
+
+<div class="container my-5">
+    <div class="text-center">
+        <button type="button" class="btn btn-primary col-md-4" onclick="return update_profile()">Confirmer mes modifications</button>
+    </div>
+</div>
+
+{% endblock %}
