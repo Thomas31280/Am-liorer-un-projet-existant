@@ -21,7 +21,8 @@ class UserTestCase(TestCase):
         c = Client()
         username = "Jonh_Doe"
         email = "test@bidon.fr"
-        response = c.get('/create/', {'username': username, "email": email})
+        password = "password"
+        response = c.get('/create/', {'username': username, "email": email, "password": password})
         self.assertEqual(response.status_code, 200)
 
     # test that create_account returns a 500 if the URL parameters doesn't exist or aren't valids
@@ -39,8 +40,9 @@ class UserTestCase(TestCase):
         c = Client()
         username = "John Doe"
         email = "john@doe.baniou"
-        User.objects.create(username=username, email=email)
-        response = c.get('/connect/', {'username': username, 'email': email})
+        password = "password"
+        User.objects.create(username=username, email=email, password=password)
+        response = c.get('/connect/', {'username': username, 'email': email, 'password': password})
         self.assertEqual(response.status_code, 200)
 
     # test that connect_account returns a 500 if the URL parameters doesn't match with any user in aliment table
@@ -68,9 +70,10 @@ class UserTestCase(TestCase):
 
         username = "John Doe"
         email = "monmail@legit.fr"
+        password = "password"
 
-        User.objects.create(username=username, email=email)
-        c.get('/connect/', {'username': username, "email": email})
+        User.objects.create(username=username, email=email, password=password)
+        c.get('/connect/', {'username': username, "email": email, "password": password})
 
         url = "https://test"
         product_name = 'Produit Test'
@@ -133,9 +136,10 @@ class UserTestCase(TestCase):
 
         username = "Nom random"
         email = "Jonny@hotmail.fr"
-        User.objects.create(username=username, email=email)
+        password = "password"
+        User.objects.create(username=username, email=email, password=password)
 
-        c.get('/connect/', {'username': username, "email": email})
+        c.get('/connect/', {'username': username, "email": email, "password": password})
 
         response = c.get('/my_favorites/')
         self.assertEqual(response.status_code, 200)
@@ -144,4 +148,61 @@ class UserTestCase(TestCase):
     def test_consult_favorites_offline(self):
         c = Client()
         response = c.get('/my_favorites/')
+        self.assertEqual(response.status_code, 500)
+
+#######################
+###AMELIORATIONS P11###
+#######################
+
+    # test that update_profile returns a 200 if the datas passed to input fields are valids
+    def test_update_profile_success(self):
+        c = Client()
+
+        username = "Nom random"
+        email = "Jonny@hotmail.fr"
+        password = "password"
+        User.objects.create(username=username, email=email, password=password)
+
+        c.get('/connect/', {'username': username, "email": email, "password": password})
+
+        new_username = "Test Update"
+        new_password = "Test Update"
+        new_email = "Test Update"
+
+        response = c.get('/update/', {'username': new_username, "email": new_email, "password": new_password})
+        self.assertEqual(response.status_code, 200)
+
+    # test that update_profile returns a 500 if the datas passed to input fields aren't valids
+    def test_update_profile_fail(self):
+        c = Client()
+
+        username = "Nom random"
+        email = "Jonny@hotmail.fr"
+        password = "password"
+        User.objects.create(username=username, email=email, password=password)
+
+        c.get('/connect/', {'username': username, "email": email, "password": password})
+
+        new_username = "Test Update"
+        new_password = "Test Update"
+        new_email = ""
+
+        response = c.get('/update/', {'username': new_username, "email": new_email, "password": new_password})
+        self.assertEqual(response.status_code, 500)
+
+    # test that update_profile returns a 500 if the user isn't loged
+    def test_update_profile_offline(self):
+        c = Client()
+
+        username = "Nom random"
+        email = "Jonny@hotmail.fr"
+        password = "password"
+        
+        User.objects.create(username=username, email=email, password=password)
+
+        new_username = "Test Update"
+        new_password = "Test Update"
+        new_email = "Test Update"
+
+        response = c.get('/update/', {'username': new_username, "email": new_email, "password": new_password})
         self.assertEqual(response.status_code, 500)

@@ -152,14 +152,15 @@ def update_profile(request):
     username = request.GET.get('username')                                       # On récupère la requête sous forme d'un dictionnaire. Ici, c'est la valeur de la clé username qu'on récupère
     email = request.GET.get('email')
     password = request.GET.get('password')
-
-    if email and username and password:
+    print(request.user.username)
+    if email and username and password and request.user.username:                # On vérifie les paramètres de l'URL ainsi que le fait que l'utilisateur soit connecté ( cette vérification est redondée en JS )
 
         try:
             current_user = request.user
             current_user_id = current_user.id
             User.objects.filter(id=current_user_id).update(username=username, email=email, password=password)  # On commence par sélectionner l'utilisateur courrant dans la table par défaut User de Django, puis utilise la methode update de l'ORM de Django sur la QuerySet afin de modifier la valeur des champs
             template = loader.get_template('user/compte.html')
+            print("Vos informations personnelles ont bien été mises à jour")
             return HttpResponse(template.render(request=request))
 
         except Exception:
