@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from search.models import Favorites, Aliment
@@ -27,8 +27,7 @@ def create_account(request):
     if email and username and password:
 
         try:
-            new_user = User(username=username, email=email, password=password)   # On commence par insérer le nouvel utilisateur dans la table par défaut User de Django, puis on save l'instance dans la table
-            new_user.save()
+            new_user = User.objects.create_user(username, email, password)       # On commence par insérer le nouvel utilisateur dans la table par défaut User de Django, puis on save l'instance dans la table
             template = loader.get_template('user/compte.html')
             return HttpResponse(template.render(request=request))
 
@@ -48,7 +47,7 @@ def connect_account(request):
     email = request.GET.get('email')
     password = request.GET.get('password')
 
-    user = User.objects.filter(username=username, email=email, password=password).first()           # On va ici chercher un utilisateur qui match avec les informations rentrées dans les inputfields et récupérées dans les paramètre de l'URL qui correspond à cette vue. On va utiliser filter pour chercher une correspondance dans la table, mais on va surtout utiliser la fonction .first() sur l'objet queryset ainsi retourné, car on veut avoir une instance précise et non une queryset. Cela se justifie par l'utilisation que l'on va avoir de notre variable user
+    user = authenticate(username=username, password=password)                    # On va ici chercher un utilisateur qui match avec les informations rentrées dans les inputfields et récupérées dans les paramètre de l'URL qui correspond à cette vue. On va utiliser filter pour chercher une correspondance dans la table, mais on va surtout utiliser la fonction .first() sur l'objet queryset ainsi retourné, car on veut avoir une instance précise et non une queryset. Cela se justifie par l'utilisation que l'on va avoir de notre variable user
 
     if user is not None:
         login(request, user)                                                     # ... et c'est pour celà que l'on souhaitait une instance et non une queryset, car la méthode login de Django s'utilise sur une instance. Une queryset passée en paramètre de cette méthode renverrait une erreur
@@ -152,13 +151,17 @@ def update_profile(request):
     username = request.GET.get('username')                                       # On récupère la requête sous forme d'un dictionnaire. Ici, c'est la valeur de la clé username qu'on récupère
     email = request.GET.get('email')
     password = request.GET.get('password')
-    print(request.user.username)
+
     if email and username and password and request.user.username:                # On vérifie les paramètres de l'URL ainsi que le fait que l'utilisateur soit connecté ( cette vérification est redondée en JS )
 
         try:
             current_user = request.user
             current_user_id = current_user.id
-            User.objects.filter(id=current_user_id).update(username=username, email=email, password=password)  # On commence par sélectionner l'utilisateur courrant dans la table par défaut User de Django, puis utilise la methode update de l'ORM de Django sur la QuerySet afin de modifier la valeur des champs
+            u = User.objects.get(id=current_user_id)                             # On commence par sélectionner l'utilisateur courrant dans la table par défaut User de Django, puis utilise la methode update de l'ORM de Django sur la QuerySet afin de modifier la valeur des champs
+            u.set_password(password)
+            u.username = username
+            u.email = email
+            u.save()
             template = loader.get_template('user/compte.html')
             print("Vos informations personnelles ont bien été mises à jour")
             return HttpResponse(template.render(request=request))

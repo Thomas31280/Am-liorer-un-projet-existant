@@ -41,7 +41,7 @@ class UserTestCase(TestCase):
         username = "John Doe"
         email = "john@doe.baniou"
         password = "password"
-        User.objects.create(username=username, email=email, password=password)
+        User.objects.create_user(username, email, password)
         response = c.get('/connect/', {'username': username, 'email': email, 'password': password})
         self.assertEqual(response.status_code, 200)
 
@@ -72,7 +72,7 @@ class UserTestCase(TestCase):
         email = "monmail@legit.fr"
         password = "password"
 
-        User.objects.create(username=username, email=email, password=password)
+        User.objects.create_user(username, email, password)
         c.get('/connect/', {'username': username, "email": email, "password": password})
 
         url = "https://test"
@@ -137,7 +137,7 @@ class UserTestCase(TestCase):
         username = "Nom random"
         email = "Jonny@hotmail.fr"
         password = "password"
-        User.objects.create(username=username, email=email, password=password)
+        User.objects.create_user(username, email, password)
 
         c.get('/connect/', {'username': username, "email": email, "password": password})
 
@@ -161,7 +161,7 @@ class UserTestCase(TestCase):
         username = "Nom random"
         email = "Jonny@hotmail.fr"
         password = "password"
-        User.objects.create(username=username, email=email, password=password)
+        User.objects.create_user(username, email, password)
 
         c.get('/connect/', {'username': username, "email": email, "password": password})
 
@@ -179,7 +179,7 @@ class UserTestCase(TestCase):
         username = "Nom random"
         email = "Jonny@hotmail.fr"
         password = "password"
-        User.objects.create(username=username, email=email, password=password)
+        User.objects.create_user(username, email, password)
 
         c.get('/connect/', {'username': username, "email": email, "password": password})
 
@@ -197,8 +197,8 @@ class UserTestCase(TestCase):
         username = "Nom random"
         email = "Jonny@hotmail.fr"
         password = "password"
-        
-        User.objects.create(username=username, email=email, password=password)
+
+        User.objects.create_user(username, email, password)
 
         new_username = "Test Update"
         new_password = "Test Update"
