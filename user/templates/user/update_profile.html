@@ -10,16 +10,19 @@
 </section>
 
 <!--Mail-->
-<div class="container my-5">
-    <input type="text" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" id="newMail">
-    <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" id="newUserName">
-    <input type="text" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2" id="newPassword">
-</div>
-
-<div class="container my-5">
-    <div class="text-center">
-        <button type="button" class="btn btn-primary col-md-4" onclick="return update_profile()">Confirmer mes modifications</button>
+<form action="/update/" method="post">
+    {% csrf_token %}
+    <div class="container my-5">
+        <input type="email" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" name="newMail">
+        <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" name="newUserName">
+        <input type="password" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2" name="newPassword">
     </div>
-</div>
+
+    <div class="container my-5">
+        <div class="text-center">
+            <input type="submit" value="Congirmer mes modifications" class="btn btn-primary col-md-4" id="updateConfirm">
+        </div>
+    </div>
+</form>
 
 {% endblock %}

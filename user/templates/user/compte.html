@@ -5,8 +5,8 @@
 <!-- userName-->
 <section class="page-section bg-dark" id="productSearched">
     <div class="container px-4 px-lg-5">
-        <h2 class="text-center text-white mt-0">{% if data_dict.username %}
-            {{ data_dict.username }}
+        <h2 class="text-center text-white mt-0">{% if user.is_authenticated %}
+            {{ user.username }}
         {% else %}
             {{ "Vous n'êtes pas connecté" }}
         {% endif %}</h2>
@@ -14,30 +14,40 @@
 </section>
 
 <!--Mail-->
-<div class="container my-5">
-    <input type="text" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" id="mail">
-    <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" id="userName">
-    <input type="text" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2" id="password">
-</div>
-
-<div class="container my-5">
-    <div class="text-center">
-        <button type="button" class="btn btn-primary col-md-4" onclick="return create_account()">Créer un compte</button>
+<form action="/create/" method="post">
+    {% csrf_token %}
+    <div class="container my-5">
+        <input type="email" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" name="mail">
+        <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" name="userName">
+        <input type="password" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2" name="password">
     </div>
-</div>
-<div class="container my-5 align-items-center">
-    <div class="text-center">
-        <button type="button" class="btn btn-primary col-md-4" onclick="return connect_account()" id="connexion">Me connecter</button>
+    <div class="container my-5">
+        <div class="text-center">
+            <input type="submit" value="Créer un compte" class="btn btn-primary col-md-4" id="createAccount">
+        </div>
     </div>
-</div>
+</form>
+<form action="/connect/" method="post">
+    {% csrf_token %}
+    <div class="container my-5">
+        <input type="email" class="form-control" placeholder="Mail" aria-label="Recipient's username" aria-describedby="basic-addon2" name="mail">
+        <input type="text" class="form-control" placeholder="User Name" aria-label="Recipient's username" aria-describedby="basic-addon2" name="userName">
+        <input type="password" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2" name="password">
+    </div>
+    <div class="container my-5">
+        <div class="text-center">
+            <input type="submit" value="Me Connecter" class="btn btn-primary col-md-4" id="connectAccount">
+        </div>
+    </div>
+</form>
 
 
-{% if data_dict.username %}
-<div class="container my-5 align-items-center">
-    <div class="text-center">
-        <button type="button" class="btn btn-primary col-md-4" onclick="return update_profile_interface()" id="updateProfileInterface">Modifier mes informations</button>
-    </div>
-</div>
-{% endif %}
+    {% if user.is_authenticated %}
+        <div class="container my-5 align-items-center">
+            <div class="text-center">
+                <a href="/update_profile_interface"><button type="button" class="btn btn-primary col-md-4">Modifier mes informations</button></a>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

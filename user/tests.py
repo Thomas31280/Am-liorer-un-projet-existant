@@ -22,7 +22,7 @@ class UserTestCase(TestCase):
         username = "Jonh_Doe"
         email = "test@bidon.fr"
         password = "password"
-        response = c.get('/create/', {'username': username, "email": email, "password": password})
+        response = c.post('/create/', {'userName': username, "mail": email, "password": password})
         self.assertEqual(response.status_code, 200)
 
     # test that create_account returns a 500 if the URL parameters doesn't exist or aren't valids
@@ -30,7 +30,8 @@ class UserTestCase(TestCase):
         c = Client()
         username = "Jonh_Doe"
         email = ""
-        response = c.get('/create/', {'username': username, "email": email})
+        password = ""
+        response = c.post('/connect/', {'userName': username, "mail": email, "password": password})
         self.assertEqual(response.status_code, 500)
 
     # CONNECT_ACCOUNT
@@ -42,7 +43,7 @@ class UserTestCase(TestCase):
         email = "john@doe.baniou"
         password = "password"
         User.objects.create_user(username, email, password)
-        response = c.get('/connect/', {'username': username, 'email': email, 'password': password})
+        response = c.post('/connect/', {'userName': username, "mail": email, "password": password})
         self.assertEqual(response.status_code, 200)
 
     # test that connect_account returns a 500 if the URL parameters doesn't match with any user in aliment table
@@ -73,7 +74,7 @@ class UserTestCase(TestCase):
         password = "password"
 
         User.objects.create_user(username, email, password)
-        c.get('/connect/', {'username': username, "email": email, "password": password})
+        c.post('/connect/', {'userName': username, "mail": email, "password": password})
 
         url = "https://test"
         product_name = 'Produit Test'
@@ -139,7 +140,7 @@ class UserTestCase(TestCase):
         password = "password"
         User.objects.create_user(username, email, password)
 
-        c.get('/connect/', {'username': username, "email": email, "password": password})
+        c.post('/connect/', {'userName': username, "mail": email, "password": password})
 
         response = c.get('/my_favorites/')
         self.assertEqual(response.status_code, 200)
@@ -163,13 +164,13 @@ class UserTestCase(TestCase):
         password = "password"
         User.objects.create_user(username, email, password)
 
-        c.get('/connect/', {'username': username, "email": email, "password": password})
+        c.post('/connect/', {'userName': username, "mail": email, "password": password})
 
         new_username = "Test Update"
         new_password = "Test Update"
         new_email = "Test Update"
 
-        response = c.get('/update/', {'username': new_username, "email": new_email, "password": new_password})
+        response = c.post('/update/', {'newUserName': new_username, "newMail": new_email, "newPassword": new_password})
         self.assertEqual(response.status_code, 200)
 
     # test that update_profile returns a 500 if the datas passed to input fields aren't valids
@@ -181,13 +182,13 @@ class UserTestCase(TestCase):
         password = "password"
         User.objects.create_user(username, email, password)
 
-        c.get('/connect/', {'username': username, "email": email, "password": password})
+        c.post('/connect/', {'userName': username, "mail": email, "password": password})
 
         new_username = "Test Update"
         new_password = "Test Update"
         new_email = ""
 
-        response = c.get('/update/', {'username': new_username, "email": new_email, "password": new_password})
+        response = c.post('/update/', {'newUserName': new_username, "newMail": new_email, "newPassword": new_password})
         self.assertEqual(response.status_code, 500)
 
     # test that update_profile returns a 500 if the user isn't loged
@@ -204,5 +205,5 @@ class UserTestCase(TestCase):
         new_password = "Test Update"
         new_email = "Test Update"
 
-        response = c.get('/update/', {'username': new_username, "email": new_email, "password": new_password})
+        response = c.post('/connect/', {'newUserName': new_username, "newMail": new_email, "newPassword": new_password})
         self.assertEqual(response.status_code, 500)

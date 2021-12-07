@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth import login, logout, authenticate
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
 
 from search.models import Favorites, Aliment
 from search import views as search_views
@@ -11,18 +12,13 @@ from django.contrib.auth.models import User
 
 def account_page(request):
 
-    current_user = request.user
-    username = current_user.username
-    data_dict = {'username': username}
-
-    return render(request, 'user/compte.html', locals())
-
+    return render(request, 'user/compte.html')
 
 def create_account(request):
 
-    username = request.GET.get('username')                                       # On récupère la requête sous forme d'un dictionnaire. Ici, c'est la valeur de la clé username qu'on récupère
-    email = request.GET.get('email')
-    password = request.GET.get('password')
+    email = request.POST.get("mail", "")
+    username = request.POST.get("userName", "")
+    password = request.POST.get("password", "")
 
     if email and username and password:
 
@@ -43,9 +39,9 @@ def create_account(request):
 
 def connect_account(request):
 
-    username = request.GET.get('username')
-    email = request.GET.get('email')
-    password = request.GET.get('password')
+    username = request.POST.get('userName', "")
+    email = request.POST.get('mail', "")
+    password = request.POST.get('password', "")
 
     user = authenticate(username=username, password=password)                    # On va ici chercher un utilisateur qui match avec les informations rentrées dans les inputfields et récupérées dans les paramètre de l'URL qui correspond à cette vue. On va utiliser filter pour chercher une correspondance dans la table, mais on va surtout utiliser la fonction .first() sur l'objet queryset ainsi retourné, car on veut avoir une instance précise et non une queryset. Cela se justifie par l'utilisation que l'on va avoir de notre variable user
 
@@ -146,13 +142,14 @@ def update_profile_interface(request):
     return HttpResponse(template.render(request=request))
 
 
+@login_required
 def update_profile(request):
 
-    username = request.GET.get('username')                                       # On récupère la requête sous forme d'un dictionnaire. Ici, c'est la valeur de la clé username qu'on récupère
-    email = request.GET.get('email')
-    password = request.GET.get('password')
+    username = request.POST.get('newUserName', "")                                   # On récupère la requête sous forme d'un dictionnaire. Ici, c'est la valeur de la clé username qu'on récupère
+    email = request.POST.get('newMail', "")
+    password = request.POST.get('newPassword', "")
 
-    if email and username and password and request.user.username:                # On vérifie les paramètres de l'URL ainsi que le fait que l'utilisateur soit connecté ( cette vérification est redondée en JS )
+    if email and username and password:                                          # On vérifie les paramètres de l'URL ainsi que le fait que l'utilisateur soit connecté ( cette vérification est redondée en JS )
 
         try:
             current_user = request.user
